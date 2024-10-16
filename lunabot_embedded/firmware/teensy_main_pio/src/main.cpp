@@ -3,8 +3,8 @@
 #include <pb_decode.h>
 #include <pb_encode.h>
 
-#include "interfaces.hpp"
 #include "robot.hpp"
+#include "interfaces.hpp"
 
 #define TX_PERIOD 10               // ms
 #define CTRL_PERIOD 2              // ms
@@ -36,8 +36,6 @@ void send() {
 
   uwb::update(state.uwb_dist_0, state.uwb_dist_1, state.uwb_dist_2);
 
-  load_cell::update(state.load_cell_weight);
-
   /*
   Serial.print("Raw: ");
   Serial.print(state.act_right_curr);
@@ -57,25 +55,20 @@ void setup() {
 
   M5Stack_UWB_Trncvr::init();
   KillSwitchRelay::init();
-  HX711_Bus::init();
 
-#ifdef OLD_CURRENT_SENSOR
-  ACS711_Current_Bus::init_ads1115();
-#else
   ADS1119_Current_Bus::init_ads1119();
-#endif
 
   uwb_timer.begin(M5Stack_UWB_Trncvr::transfer, UWB_TRANSFER_PERIOD);
 
+  drivetrain::begin();
+  excavation::begin();
+  deposition::begin();
+
   // disable timeout
   MC1.setTimeout(0);
-  MC2.setTimeout(0);
-  MC3.setTimeout(0);
-
   // set to fast ramp (1-10 - fast, 11-20 slow, 20-80 intermed)
   MC1.setRamping(1);
-  MC2.setRamping(1);
-  MC3.setRamping(1);
+
   last_effort = millis();
 }
 
@@ -112,11 +105,4 @@ void loop() {
     send();
     n = RawHID.send(buffer, 0);
   }
-
-#ifdef OLD_CURRENT_SENSOR
-  if (ms_curr_update > CURR_UPDATE_PERIOD) {
-    ms_curr_update -= CURR_UPDATE_PERIOD;
-    ACS711_Current_Bus::transfer();
-  }
-#endif
 }
