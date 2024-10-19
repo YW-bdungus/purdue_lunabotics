@@ -12,6 +12,10 @@
 <xacro:property name="wheelRadius" value="0.2"/>
 <xacro:property name="wheelMass" value="5"/>
 
+<xacro:property name="lidarMass" value="0.190" />
+<xacro:property name="lidarRadius" value="0.038" />
+<xacro:property name="lidarHeight" value="0.041" />
+
 <xacro:macro name="box_inertia" params="m x y z">
   <inertia  ixx="${m*(y*y+z*z)/12}" ixy = "0" ixz = "0"
     iyy="${m*(x*x+z*z)/12}" iyz = "0"
@@ -29,6 +33,7 @@
 <xacro:include filename="$(find dummy_bot_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find dummy_bot_description)/urdf/dummy_bot.trans" />
 <xacro:include filename="$(find dummy_bot_description)/urdf/dummy_bot.gazebo" />
+
 <link name="base_link">
   <inertial>
     <origin rpy="0 0 0" xyz="0 0.0 0.08835894305363262"/>
@@ -134,6 +139,29 @@
   </collision>
 </link>
 
+<link name="lidar">
+  <inertial>
+    <!-- <origin rpy="0 -1.0471975512 0" xyz="0 0 0" /> -->
+    <origin rpy="0 -0.785398163 0" xyz="0 0 0" />
+    <mass value="${lidarMass}" />
+    <xacro:cylinder_inertia m="${lidarMass}" r="${lidarRadius}" h="${lidarHeight}"/>
+  </inertial>
+  <visual>
+    <!-- <origin rpy="0 0.785398163 0" xyz="0 0 0"/> -->
+    <geometry>
+      <cylinder length="0.041" radius="0.038" />
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <!-- <origin rpy="0 0.785398163 0" xyz="0 0 0"/> -->
+    <geometry>
+      <cylinder length="0.041" radius="0.038" />
+    </geometry>
+  </collision>
+</link>
+
+
 
 <joint name="right_front_rev" type="continuous">
   <origin rpy="0 0 0" xyz="0.254 -0.254 0.101276"/>
@@ -162,6 +190,14 @@
   <child link="right_back"/>
   <axis xyz="0.0 1.0 0.0"/>
 </joint>
+
+<joint name="baselink_lidar" type="fixed">
+  <origin rpy="0 0.785398163 0" xyz="0.275 -0.3 0.4" />
+  <parent link="base_link" />
+  <child link="lidar" />
+</joint>
+
+
 
 <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
 <xacro:realsense_d435 sensor_name="d435_forward" parent_link="base_link" rate="10">

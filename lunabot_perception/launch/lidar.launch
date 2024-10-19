@@ -1,0 +1,8 @@
+<launch>
+    <arg name="lidar" default="true"/>
+
+    <!-- publish static transform of lidar  -->
+    <node pkg="tf" type="static_transform_publisher" name="base_to_lidar" args="0.275 -0.3 0.4 0 0.785398163 0 base_link laser 100" />
+
+    <include if="$(arg lidar)" file="$(find rplidar_ros)/launch/rplidar_a2m8.launch"/>
+</launch>

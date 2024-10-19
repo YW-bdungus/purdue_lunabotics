@@ -61,4 +61,34 @@
   <fdir1 value="1 0 0"/>
 </gazebo>
 
+<gazebo reference="lidar">
+  <material>Gazebo/Red</material>
+
+  <sensor name="lidar" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>true</visualize>
+    <update_rate>10</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14159</min_angle>
+          <max_angle>3.14159</max_angle>
+          <samples_per_ray>1</samples_per_ray>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.2</min>
+        <max>12.0</max>
+        <resolution>1</resolution>
+      </range>
+    </ray>
+    <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+      <topicName>/scan</topicName>
+      <frameName>lidar</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+
 </robot>

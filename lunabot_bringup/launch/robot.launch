@@ -7,6 +7,7 @@
     <arg name="overhead" default="true" />
     <arg name="slam" default="true" />
     <arg name="exp_name" default="exp" />
+    <arg name="lidar" default="true" />
 
     <node if="$(arg teensy)" name="teensy_driver" pkg="lunabot_embedded" type="teensy_driver_node" output="screen"/>
 
@@ -15,6 +16,7 @@
     <include if="$(arg record)" file="$(find lunabot_bringup)/launch/record.launch">
         <arg name="exp_name" value="$(arg exp_name)"/>
     </include>
+    <include if="$(arg lidar)" file="$(find lunabot_perception)/launch/lidar.launch"/>
 
     <group if="$(arg autonomy)">
 
@@ -26,6 +28,8 @@
         <arg name="rtabmapviz" value="false" />
         <arg name="imu_topic" value="/imu" />
         <arg name="frame_id" value="base_link" />
+        <arg name="subscribe_scan" value="true"/>
+        <arg name="scan_topic" value="/scan" />
       </include>
 
       <node pkg="lunabot_control" type="effort_factory.py" name="effort_factory" output="screen"/>
