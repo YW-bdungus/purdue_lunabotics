@@ -6,9 +6,16 @@
     
     <!-- filter lidar angle input -->
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="scan_filter">
-        <param name="scan_filter_chain" value="$(find lunabot_perception)/config/lidar_angular_filter.yml" />
-        <remap from="/scan_filtered" to="/filtered_scan"/>
-    </node>
+        <param name="scan_filter_chain" value="[
+            {'name': 'angular_bounds_filter', 
+             'type': 'laser_filters/LaserScanAngularBoundsFilter', 
+             'params': {'lower_angle': -1.5708, 'upper_angle': 1.5708}
+            }
+          ]"/>
+        
+        <!-- Remap the input and output scan topics -->
+        <remap from="/scan_filtered" to="/filtered_scan"/>  <!-- Output topic for filtered scan -->
+      </node>
 
     <node name="scan_to_pc" pkg="lunabot_perception" type="scan_to_pc" output="screen">
         <remap from="/scan" to="/filtered_scan"/>
