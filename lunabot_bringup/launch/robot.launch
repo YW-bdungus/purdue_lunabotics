@@ -28,8 +28,8 @@
         <arg name="rtabmapviz" value="false" />
         <arg name="imu_topic" value="/imu" />
         <arg name="frame_id" value="base_link" />
-        <arg name="subscribe_scan" value="true"/>
-        <arg name="scan_topic" value="/scan" />
+        <arg name="subscribe_scan_cloud" value="true"/>
+        <arg name="scan_cloud_topic" value="/lidar_cloud" />
       </include>
 
       <node pkg="lunabot_control" type="effort_factory.py" name="effort_factory" output="screen"/>
