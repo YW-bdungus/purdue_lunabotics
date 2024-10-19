@@ -9,7 +9,7 @@
         <param name="scan_filter_chain" value="[
             {'name': 'angular_bounds_filter', 
              'type': 'laser_filters/LaserScanAngularBoundsFilter', 
-             'params': {'lower_angle': -1.5708, 'upper_angle': 1.5708}
+             'params': {'lower_angle': 0, 'upper_angle': 3.14159}
             }
           ]"/>
         
