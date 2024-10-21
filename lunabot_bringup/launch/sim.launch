@@ -56,6 +56,10 @@
     <arg name="sim" value="true"/>
   </include>
 
+  <!-- lidar -->
+  <include file="$(find lunabot_perception)/launch/lidar.launch">
+    <arg name="sim" value="true"/>
+  </include>
 
   <!-- navigation -->
   <group ns="nav">
