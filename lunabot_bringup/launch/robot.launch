@@ -11,6 +11,10 @@
 
     <arg name="rgb_topic" value="/d455_back/camera/color/image_rect_color"/> <!-- added line -->
     <arg name="depth_topic" value="/d455_back/camera/aligned_depth_to_color/image_raw"/> <!-- added line -->
+    <arg name="camera_info_topic" value="/d455_back/camera/color/camera_info"/> <!-- added line -->
+    <arg name="frame_id" value="base_link" /> <!-- added line -->
+    <arg name="imu_topic" value="/imu" /> <!-- added line -->
+    <arg name="scan_cloud_topic" value="/lidar_cloud" /> <!-- added line -->
 
     <node if="$(arg teensy)" name="teensy_driver" pkg="lunabot_embedded" type="teensy_driver_node" output="screen"/>
 
@@ -23,10 +27,8 @@
 
     <group if="$(arg autonomy)">
 
-      <include if="$(arg slam)" file="$(find rtabmap_ros)/launch/rtabmap.launch" >
-        <arg name="rtabmap_args" value="--delete_db_on_start"/>
-        <!-- <arg name="subscribe_rgb" value="true" /> added line
-        <arg name="subscribe_depth" value="true" /> -->
+      <!-- <include if="$(arg slam)" file="$(find rtabmap_ros)/launch/rtabmap.launch" >
+        <arg name="rtabmap_args" value="-delete_db_on_start"/>
         <arg name="depth_topic" value="/d455_back/camera/aligned_depth_to_color/image_raw"/>
         <arg name="rgb_topic" value="/d455_back/camera/color/image_rect_color"/>
         <arg name="camera_info_topic" value="/d455_back/camera/color/camera_info"/>
@@ -35,7 +37,20 @@
         <arg name="frame_id" value="base_link" />
         <arg name="subscribe_scan_cloud" value="true"/>
         <arg name="scan_cloud_topic" value="/lidar_cloud" />
-      </include>
+      </include> -->
+
+      <node if="$(arg slam)" pkg="rtabmap_ros" type="rtabmap" output="screen">
+        <remap from="rgb/image" to="$(arg rgb_topic)" />
+        <remap from="depth/image" to="$(arg depth_topic)" />
+        <remap from="rgb/camera_info" to="$(arg camera_info_topic)" />
+
+        <remap from="scan_cloud" to="$(arg scan_cloud_topic)"/>
+
+        <remap from="imu" to="$(arg imu_topic)" />
+
+        <param name="subscribe_depth" type="bool" value="true" />
+        <param name="subscribe_scan_cloud" type="bool" value="true" />
+      </node>
 
       <node pkg="lunabot_control" type="effort_factory.py" name="effort_factory" output="screen"/>
 
