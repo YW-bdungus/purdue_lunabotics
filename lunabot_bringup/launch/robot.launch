@@ -39,7 +39,7 @@
         <arg name="scan_cloud_topic" value="/lidar_cloud" />
       </include> -->
 
-      <node if="$(arg slam)" pkg="rtabmap_ros" type="rtabmap" output="screen">
+      <node if="$(arg slam)" name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen">
         <remap from="rgb/image" to="$(arg rgb_topic)" />
         <remap from="depth/image" to="$(arg depth_topic)" />
         <remap from="rgb/camera_info" to="$(arg camera_info_topic)" />
