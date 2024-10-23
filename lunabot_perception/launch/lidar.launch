@@ -19,9 +19,9 @@
         </node>
     </group>
 
-    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <!-- <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
         <rosparam command="load" file="$(find lunabot_config)/config/lidar_angular_bounds.yaml"/>
-    </node>
+    </node> -->
 
     <node name="scan_to_pc" pkg="lunabot_perception" type="scan_to_pc" output="screen">
         <remap from="/scan" to="/scan_filtered"/>
