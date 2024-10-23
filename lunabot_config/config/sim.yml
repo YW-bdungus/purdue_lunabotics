@@ -1,6 +1,7 @@
 depth_topics:
   - /d435_backward/depth/color/points
   - /d435_forward/depth/color/points
+  - /scan_filtered
 depth_frame_id: "d435_backward_link"
 pc_topic: "/point_cloud"
 odom_topic: "/odom"

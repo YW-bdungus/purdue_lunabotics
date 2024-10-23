@@ -9,7 +9,6 @@
         <!-- publish static transform of lidar  -->
         <node pkg="tf" type="static_transform_publisher" name="base_to_lidar" args="0.275 0.3 0.38735 0 1.04719755 0 base_link laser 100" />
 
-        <!-- filter lidar angle input -->
         <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="scan_filter">
             <param name="scan_filter_chain" value="[
                 {'name': 'angular_bounds_filter', 
@@ -17,14 +16,15 @@
                  'params': {'lower_angle': 0, 'upper_angle': 3.14159}
                 }
               ]"/>
-
-            <!-- Remap the input and output scan topics -->
-            <remap from="/scan_filtered" to="/filtered_scan"/>  <!-- Output topic for filtered scan -->
         </node>
     </group>
 
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+        <rosparam command="load" file="$(find lunabot_config)/config/lidar_angular_bounds.yaml"/>
+    </node>
+
     <node name="scan_to_pc" pkg="lunabot_perception" type="scan_to_pc" output="screen">
-        <remap unless="$(arg sim)" from="/scan" to="/filtered_scan"/>
+        <remap from="/scan" to="/scan_filtered"/>
         <remap from="/cloud" to="/lidar_cloud" />
     </node>
 </launch>

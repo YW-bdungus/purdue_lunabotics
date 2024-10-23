@@ -22,8 +22,10 @@
 
       <include if="$(arg slam)" file="$(find rtabmap_ros)/launch/rtabmap.launch" >
         <arg name="rtabmap_args" value="--delete_db_on_start"/>
+        <arg name="subscribe_rgb" value="true" />
+        <arg name="subscribe_depth" value="true" />
         <arg name="depth_topic" value="/d455_back/camera/aligned_depth_to_color/image_raw"/>
-        <arg name="rgb_topic" value="/d455_back/camera/color/image_rect_color"/>    
+        <arg name="rgb_topic" value="/d455_back/camera/color/image_rect_color"/>
         <arg name="camera_info_topic" value="/d455_back/camera/color/camera_info"/>
         <arg name="rtabmapviz" value="false" />
         <arg name="imu_topic" value="/imu" />
