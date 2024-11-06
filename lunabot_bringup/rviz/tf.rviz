@@ -76,7 +76,7 @@ Visualization Manager:
           Value: true
         d435_link:
           Value: true
-        laser:
+        lidar:
           Value: true
         map:
           Value: true
