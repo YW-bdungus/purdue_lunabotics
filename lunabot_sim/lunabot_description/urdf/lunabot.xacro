@@ -12,9 +12,9 @@
   <xacro:property name="wheelRadius" value="0.15" />
   <xacro:property name="wheelMass" value="5" />
 
-  <xacro:property name="lidarMass" value="0.190" />
-  <xacro:property name="lidarRadius" value="0.038" />
-  <xacro:property name="lidarHeight" value="0.041" />
+  <xacro:property name="laserMass" value="0.190" />
+  <xacro:property name="laserRadius" value="0.038" />
+  <xacro:property name="laserHeight" value="0.041" />
 
   <xacro:macro name="box_inertia" params="m x y z">
     <inertia ixx="${m*(y*y+z*z)/12}" ixy="0" ixz="0"
@@ -145,12 +145,12 @@
     </collision>
   </link>
 
-  <link name="lidar">
+  <link name="laser">
     <inertial>
       <!-- <origin rpy="0 -1.0471975512 0" xyz="0 0 0" /> -->
       <origin rpy="0 -1.04719755 0" xyz="0 0 0" />
-      <mass value="${lidarMass}" />
-      <xacro:cylinder_inertia m="${lidarMass}" r="${lidarRadius}" h="${lidarHeight}" />
+      <mass value="${laserMass}" />
+      <xacro:cylinder_inertia m="${laserMass}" r="${laserRadius}" h="${laserHeight}" />
     </inertial>
     <visual>
       <!-- <origin rpy="0 0.785398163 0" xyz="0 0 0"/> -->
@@ -234,16 +234,16 @@
     <axis xyz="0.0 1.0 0.0" />
   </joint>
 
-  <joint name="baselink_lidar" type="fixed">
+  <joint name="baselink_laser" type="fixed">
     <origin rpy="0 1.04719755 0" xyz="0.275 0.3 0.38735" />
     <parent link="base_link" />
-    <child link="lidar" />
+    <child link="laser" />
   </joint>
 
-  <joint name="baselink_lidar" type="fixed">
+  <joint name="baselink_laser" type="fixed">
     <origin rpy="0 1.04719755 0" xyz="0.275 0.3 0.38735" />
     <parent link="base_link" />
-    <child link="lidar" />
+    <child link="laser" />
   </joint>
 
 </robot>
