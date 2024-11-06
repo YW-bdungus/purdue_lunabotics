@@ -27,7 +27,7 @@ ScanFilter::ScanFilter() {
 void ScanFilter::scanCallback(const sensor_msgs::LaserScan::ConstPtr &scan) {
   sensor_msgs::PointCloud2 cloud;
   try {
-    projector_.transformLaserScanToPointCloud("lidar", *scan, cloud, tfListener_);
+    projector_.transformLaserScanToPointCloud("laser", *scan, cloud, tfListener_);
   } catch (tf::TransformException &e) {
     ROS_ERROR("%s", e.what());
     return;
