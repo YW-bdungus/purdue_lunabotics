@@ -7,7 +7,7 @@
         <include if="$(arg lidar)" file="$(find rplidar_ros)/launch/rplidar_a2m8.launch"/>
 
         <!-- publish static transform of lidar  -->
-        <node pkg="tf" type="static_transform_publisher" name="base_to_lidar" args="0.275 0.3 0.38735 0 1.04719755 0 base_link laser 100" />
+        <node pkg="tf" type="static_transform_publisher" name="base_to_lidar" args="0.275 0.3 0.38735 0 1.04719755 0 base_link lidar 100" />
 
         <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
             <!-- <param name="scan_filter_chain" value="[
