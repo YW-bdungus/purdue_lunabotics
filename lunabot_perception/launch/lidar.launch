@@ -27,7 +27,7 @@
     </node> -->
 
     <node name="scan_to_pc" pkg="lunabot_perception" type="scan_to_pc" output="screen">
-        <!-- <remap from="/scan" to="/scan_filtered"/> -->
+        <remap from="/scan" to="/scan_filtered"/>
         <remap from="/cloud" to="/lidar_cloud" />
     </node>
 </launch>
